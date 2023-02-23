@@ -1,52 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Randomly positioned and colored DIV boxes</title>
-  <style>
-    /* CSS code from previous response */
-    .container {
-      position: relative;
-      width: 1920px;
-      height: 1080px;
-    }
-
-    .box {
-      position: absolute;
-      top: calc(100% * var(--random-y));
-      left: calc(100% * var(--random-x));
-      width: calc(10% * var(--random-size));
-      height: calc(10% * var(--random-size));
-      background-color: var(--random-color);
-    }
-
-    :root {
-      --random-x: calc(var(--seed) * 0.01);
-      --random-y: calc((var(--seed) * 0.01) - 0.1);
-      --random-size: calc((var(--seed) * 0.01) + 0.5);
-      --random-color: rgb(var(--red), var(--green), var(--blue));
-      --red: calc(var(--seed) % 256);
-      --green: calc((var(--seed) * 2) % 256);
-      --blue: calc((var(--seed) * 3) % 256);
-    }
-  </style>
+	<meta charset="UTF-8">
+	<title>Randomly positioned and colored DIV boxes</title>
+	<style>
+		.container {
+			position: relative;
+			width: 1920px;
+			height: 1080px;
+			border: 1px solid #000;
+		}
+		
+		.box {
+			position: absolute;
+			width: var(--size);
+			height: var(--size);
+			top: var(--top);
+			left: var(--left);
+			background-color: var(--color);
+		}
+	</style>
 </head>
 <body>
-  <div class="container">
-    <div class="box"></div>
-  </div>
+	<div class="container">
+	</div>
+	
+	<script>
+		const container = document.querySelector('.container');
+		for (let i = 0; i < 6; i++) {
+			const box = document.createElement('div');
+			box.classList.add('box');
+			box.style.setProperty('--size', `${getRandomInt(50, 200)}px`);
+			box.style.setProperty('--top', `${getRandomInt(0, 980)}px`);
+			box.style.setProperty('--left', `${getRandomInt(0, 1720)}px`);
+			box.style.setProperty('--color', getRandomColor());
+			container.appendChild(box);
+		}
 
-  <script>
-    // Get the container element
-    const container = document.querySelector('.container');
+		function getRandomInt(min, max) {
+			return Math.floor(Math.random() * (max - min + 1)) + min;
+		}
 
-    // Create 50 DIV boxes and append them to the container
-    for (let i = 0; i < 50; i++) {
-      const box = document.createElement('div');
-      box.classList.add('box');
-      box.style.setProperty('--seed', Math.random());
-      container.appendChild(box);
-    }
-  </script>
+		function getRandomColor() {
+			const r = getRandomInt(0, 255);
+			const g = getRandomInt(0, 255);
+			const b = getRandomInt(0, 255);
+			return `rgb(${r}, ${g}, ${b})`;
+		}
+	</script>
 </body>
 </html>
