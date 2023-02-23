@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Randomly positioned and colored DIV boxes</title>
+  <style>
+    /* CSS code from previous response */
+    .container {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+    }
+
+    .box {
+      position: absolute;
+      top: calc(100% * var(--random-y));
+      left: calc(100% * var(--random-x));
+      width: calc(10% * var(--random-size));
+      height: calc(10% * var(--random-size));
+      background-color: var(--random-color);
+    }
+
+    :root {
+      --random-x: calc(var(--seed) * 0.01);
+      --random-y: calc((var(--seed) * 0.01) - 0.1);
+      --random-size: calc((var(--seed) * 0.01) + 0.5);
+      --random-color: rgb(var(--red), var(--green), var(--blue));
+      --red: calc(var(--seed) % 256);
+      --green: calc((var(--seed) * 2) % 256);
+      --blue: calc((var(--seed) * 3) % 256);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+  </div>
+
+  <script>
+    // Get the container element
+    const container = document.querySelector('.container');
+
+    // Create 50 DIV boxes and append them to the container
+    for (let i = 0; i < 50; i++) {
+      const box = document.createElement('div');
+      box.classList.add('box');
+      box.style.setProperty('--seed', Math.random());
+      container.appendChild(box);
+    }
+  </script>
+</body>
+</html>
